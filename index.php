@@ -1,5 +1,13 @@
 <?php
+//it declare variables for validation messages
+$errName="";
+$errEmail="";
+$errMessage="";
+$errHuman="";
+$result="";
+
 	if (isset($_POST["submit"])) {
+
 		$name = $_POST['name'];
 		$email = $_POST['email'];
 		$message = $_POST['message'];
@@ -7,7 +15,6 @@
 		$from = 'Demo Contact Form'; 
 		$to = 'example@domain.com'; 
 		$subject = 'Message from Contact Demo ';
-		
 		$body ="From: $name\n E-Mail: $email\n Message:\n $message";
 
 		// Check if name has been entered
@@ -16,7 +23,7 @@
 		}
 		
 		// Check if email has been entered and is valid
-		if (!$_POST['email'] || !filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+		if (!$_POST['email'] ) {
 			$errEmail = 'Please enter a valid email address';
 		}
 		
@@ -60,28 +67,32 @@ if (!$errName && !$errEmail && !$errMessage && !$errHuman) {
 					<div class="form-group">
 						<label for="name" class="col-sm-2 control-label">Name</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" id="name" name="name" placeholder="First & Last Name" value="<?php echo htmlspecialchars($_POST['name']); ?>">
+							//put a @ to prevent the contents of the "value" is displayed in our input also to prevent undefined index name message display
+							<input type="text" class="form-control" id="name" name="name" placeholder="First & Last Name" value="<?php echo @$_POST["name"]?>">
 							<?php echo "<p class='text-danger'>$errName</p>";?>
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="email" class="col-sm-2 control-label">Email</label>
 						<div class="col-sm-10">
-							<input type="email" class="form-control" id="email" name="email" placeholder="example@domain.com" value="<?php echo htmlspecialchars($_POST['email']); ?>">
+							//put a @ to prevent the contents of the "value" is displayed in our input also to prevent undefined index email message display
+							<input type="email" class="form-control" id="email" name="email" placeholder="example@domain.com" value="<?php echo @$_POST["email"]?>">
 							<?php echo "<p class='text-danger'>$errEmail</p>";?>
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="message" class="col-sm-2 control-label">Message</label>
 						<div class="col-sm-10">
-							<textarea class="form-control" rows="4" name="message"><?php echo htmlspecialchars($_POST['message']);?></textarea>
+							//put a @ to prevent the contents of the "value" is displayed in our textarea also to prevent undefined index message message display
+							<textarea class="form-control" rows="4" name="message" placeholder="Ingresa tu mensaje"><?php echo @$_POST["message"]?></textarea>
 							<?php echo "<p class='text-danger'>$errMessage</p>";?>
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="human" class="col-sm-2 control-label">2 + 3 = ?</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" id="human" name="human" placeholder="Your Answer">
+							//put a @ to prevent the contents of the "value" is displayed in our input also to prevent undefined index human message display
+							<input type="text" class="form-control" id="human" name="human" placeholder="Your Answer" value="<?php echo @$_POST["human"]?>">
 							<?php echo "<p class='text-danger'>$errHuman</p>";?>
 						</div>
 					</div>
